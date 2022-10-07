@@ -3,6 +3,7 @@
 
 int main(void) {
     load_background(background);
+    clrscr();
     
     while(1);
     
