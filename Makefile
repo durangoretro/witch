@@ -1,5 +1,5 @@
 SOURCE_DIR=.
-RESCOMP = ../rescomp/workspace/rescomp/target/rescomp.jar
+RESCOMP = ../rescomp/target/rescomp.jar
 BUILD_DIR = bin
 CFG=../dclib/cfg/durango16k.cfg
 DCLIB=../dclib/bin
@@ -24,7 +24,7 @@ $(BUILD_DIR)/main.o: $(BUILD_DIR)/main.s $(BUILD_DIR)
 
 
 witch.bin: $(BUILD_DIR) $(BUILD_DIR)/main.o
-	ld65 -C $(CFG) $(BUILD_DIR)/main.o $(DCLIB)/durango.lib $(DCLIB)/sprites.lib -o witch.bin	
+	ld65 -C $(CFG) $(BUILD_DIR)/main.o $(DCLIB)/durango.lib $(DCLIB)/sprites.lib $(DCLIB)/system.lib $(DCLIB)/psv.lib -o witch.bin	
 
 clean:
 	rm -Rf $(BUILD_DIR) witch.bin
