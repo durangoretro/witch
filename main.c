@@ -16,10 +16,16 @@ int main(void) {
     player.width = 30;
     player.height = 27;
     calculate_coords(&player);
-    consoleLogDecimal(0x00);
-    startStopwatch();
-    draw_sprite(&player);
-    stopStopwatch();
+    
+	draw_sprite(&player);
+	
+    waitFrames(10);
+	player.resource = &sprites_0_1;
+	draw_sprite(&player);
+
+	waitFrames(10);
+	player.resource = &sprites_0_2;
+	draw_sprite(&player);
     
     
     while(1);
