@@ -13,8 +13,8 @@ int main(void) {
     player.resource = &sprites_0_0;
     player.x=0;
     player.y=0;
-    player.width = 14;
-    player.height = 9;
+    player.width = 30;
+    player.height = 27;
     calculate_coords(&player);
     consoleLogDecimal(0x00);
     startStopwatch();
