@@ -17,6 +17,9 @@ int main(void) {
     player.height = 27;
     calculate_coords(&player);
     
+    while(1) {
+    waitFrames(10);
+	player.resource = &sprites_0_0;
 	draw_sprite(&player);
 	
     waitFrames(10);
@@ -26,9 +29,8 @@ int main(void) {
 	waitFrames(10);
 	player.resource = &sprites_0_2;
 	draw_sprite(&player);
+    }
     
-    
-    while(1);
-    
+        
     return 0;
 }
