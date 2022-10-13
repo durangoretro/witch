@@ -12,23 +12,18 @@ int main(void) {
     
     player.resource = &sprites_0_0;
     player.x=0;
-    player.y=0;
+    player.y=50;
     player.width = 30;
     player.height = 27;
     calculate_coords(&player);
+    consoleLogWord(player.mem);
+    
+    waitFrames(10);
+    draw_sprite(&player);
     
     while(1) {
-    waitFrames(10);
-	player.resource = &sprites_0_0;
-	draw_sprite(&player);
-	
-    waitFrames(10);
-	player.resource = &sprites_0_1;
-	draw_sprite(&player);
-
 	waitFrames(10);
-	player.resource = &sprites_0_2;
-	draw_sprite(&player);
+	move_sprite_right(&player);
     }
     
         
