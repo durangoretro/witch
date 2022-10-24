@@ -22,10 +22,8 @@ int main(void) {
     draw_sprite(&player);
     
     while(1) {
-	waitFrames(10);
-    consoleLogBinary(0x00);
-	move_sprite_right(&player);
-    consoleLogStr("\n");
+        waitFrames(10);
+        move_sprite_right(&player);
     }
     
         
