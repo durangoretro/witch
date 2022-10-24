@@ -23,7 +23,9 @@ int main(void) {
     
     while(1) {
 	waitFrames(10);
+    consoleLogBinary(0x00);
 	move_sprite_right(&player);
+    consoleLogStr("\n");
     }
     
         
