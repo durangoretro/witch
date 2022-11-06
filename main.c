@@ -5,16 +5,19 @@
 #include "bin/sprites.h"
 #include "bin/witch_sprite.h"
 
+void updatePlayer(void);
+int main(void);
+
 sprite player;
 sprite pumpkin;
 
-int main(void) {
+int main() {
     load_background(background);
     clrscr();
     
     pumpkin.resource = &sprites_0_0;
     pumpkin.x=0;
-    pumpkin.y=10;
+    pumpkin.y=5;
     pumpkin.width = 30;
     pumpkin.height = 27;
     calculate_coords(&pumpkin);
@@ -34,10 +37,26 @@ int main(void) {
     draw_sprite(&player);
     
     while(1) {
-        waitFrames(10);
+        waitFrames(2);
         move_sprite_right(&pumpkin);
+        updatePlayer();
     }
     
         
     return 0;
+}
+
+void updatePlayer() {
+    unsigned char gamepad;
+    
+    // Read gamepad
+    gamepad=readGamepad(0);
+    // Move left
+    if(gamepad & BUTTON_LEFT && player.x>0) {
+        //move_sprite_left(&player);
+    }
+    // MOve right
+    else if(gamepad & BUTTON_RIGHT && player.x+player.width<128) {
+        move_sprite_right(&player);
+    }
 }
