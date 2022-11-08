@@ -6,15 +6,25 @@
 #include "bin/witch_sprite.h"
 
 void updatePlayer(void);
+void updatePumpkin(void);
 int main(void);
 
+typedef struct{
+    unsigned char x, y;
+    unsigned short mem;
+    unsigned char width, height;
+    void* resource;
+    unsigned char direction;
+} s_pumpkin;
+
 sprite player;
-sprite pumpkin;
+s_pumpkin pumpkin;
 
 int main() {
     load_background(background);
     clrscr();
     
+    pumpkin.direction=0;
     pumpkin.resource = &sprites_0_0;
     pumpkin.x=0;
     pumpkin.y=5;
@@ -38,12 +48,29 @@ int main() {
     
     while(1) {
         waitFrames(2);
-        move_sprite_right(&pumpkin);
+        updatePumpkin();
         updatePlayer();
     }
     
         
     return 0;
+}
+
+void updatePumpkin() {
+    if(pumpkin.x==0) {
+        pumpkin.direction=0;
+        pumpkin.resource = &sprites_0_0;
+    }
+    if(pumpkin.x==96) {
+        pumpkin.direction=1;
+        pumpkin.resource = &sprites_0_2;
+    }
+    if(pumpkin.direction==0) {
+        move_sprite_right(&pumpkin);
+    }
+    else {
+        move_sprite_left(&pumpkin);
+    }
 }
 
 void updatePlayer() {
