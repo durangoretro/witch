@@ -53,10 +53,12 @@ void updatePlayer() {
     gamepad=readGamepad(0);
     // Move left
     if(gamepad & BUTTON_LEFT && player.x>0) {
+        player.resource = &witch_sprite_0_1;
         move_sprite_left(&player);
     }
     // MOve right
     else if(gamepad & BUTTON_RIGHT && player.x+player.width<128) {
+        player.resource = &witch_sprite_0_0;
         move_sprite_right(&player);
     }
 }
