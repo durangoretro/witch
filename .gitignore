@@ -1,3 +1,4 @@
 bin/
-witch.bin
+*.bin
+*.dux
 *.temp

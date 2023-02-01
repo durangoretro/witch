@@ -5,7 +5,7 @@ CFG=../dclib/cfg/durango16k.cfg
 DCLIB=../dclib/bin
 DCINC=../dclib/inc
 
-all: witch.bin
+all: witch.dux
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
@@ -25,9 +25,11 @@ $(BUILD_DIR)/main.s: $(SOURCE_DIR)/main.c $(BUILD_DIR) $(BUILD_DIR)/background.h
 $(BUILD_DIR)/main.o: $(BUILD_DIR)/main.s $(BUILD_DIR)
 	ca65 -t none $(BUILD_DIR)/main.s -o $(BUILD_DIR)/main.o
 
+$(BUILD_DIR)/witch.bin: $(BUILD_DIR) $(BUILD_DIR)/main.o
+	ld65 -C $(CFG) $(BUILD_DIR)/main.o $(DCLIB)/durango.lib $(DCLIB)/sprites.lib $(DCLIB)/system.lib $(DCLIB)/psv.lib -o $(BUILD_DIR)/witch.bin	
 
-witch.bin: $(BUILD_DIR) $(BUILD_DIR)/main.o
-	ld65 -C $(CFG) $(BUILD_DIR)/main.o $(DCLIB)/durango.lib $(DCLIB)/sprites.lib $(DCLIB)/system.lib $(DCLIB)/psv.lib -o witch.bin	
+witch.dux: $(BUILD_DIR)/witch.bin $(BUILD_DIR)
+	java -jar ${RESCOMP} -m SIGNER -n $$(git log -1 | head -1 | sed 's/commit //' | cut -c1-8) -i $(BUILD_DIR)/witch.bin -o witch.dux
 
 clean:
-	rm -Rf $(BUILD_DIR) witch.bin
+	rm -Rf $(BUILD_DIR) witch.dux
