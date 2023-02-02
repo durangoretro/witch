@@ -39,7 +39,7 @@ int main() {
     
     player.resource = &witch_sprite_0_0;
     player.x=0;
-    player.y=50;
+    player.y=70;
     player.width = 32;
     player.height = 37;
     calculate_coords(&player);
@@ -82,10 +82,18 @@ void updatePlayer() {
     if(gamepad & BUTTON_LEFT && player.x>0) {
         player.resource = &witch_sprite_0_1;
         move_sprite_left(&player);
+        move_sprite_left(&player);
+        move_sprite_left(&player);
     }
     // MOve right
     else if(gamepad & BUTTON_RIGHT && player.x+player.width<128) {
         player.resource = &witch_sprite_0_0;
         move_sprite_right(&player);
+        move_sprite_right(&player);
+        move_sprite_right(&player);
+    }
+    else if(gamepad & BUTTON_DOWN) {
+        player.resource = &witch_sprite_0_0;
+        move_sprite_down(&player);
     }
 }
