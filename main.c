@@ -96,4 +96,8 @@ void updatePlayer() {
         player.resource = &witch_sprite_0_0;
         move_sprite_down(&player);
     }
+    else if(gamepad & BUTTON_UP) {
+        player.resource = &witch_sprite_0_0;
+        move_sprite_up(&player);
+    }
 }
