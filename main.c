@@ -92,12 +92,14 @@ void updatePlayer() {
         move_sprite_right(&player);
         move_sprite_right(&player);
     }
-    else if(gamepad & BUTTON_DOWN) {
+    else if(gamepad & BUTTON_DOWN && player.y+player.height<128) {
         player.resource = &witch_sprite_0_0;
         move_sprite_down(&player);
+        move_sprite_down(&player);
     }
-    else if(gamepad & BUTTON_UP) {
+    else if(gamepad & BUTTON_UP && player.y>35) {
         player.resource = &witch_sprite_0_0;
+        move_sprite_up(&player);
         move_sprite_up(&player);
     }
 }
