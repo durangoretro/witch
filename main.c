@@ -4,6 +4,7 @@
 #include "bin/background.h"
 #include "bin/sprites.h"
 #include "bin/witch_sprite.h"
+#include "bin/candy.h"
 
 void updatePlayer(void);
 void updatePumpkin(void);
@@ -19,6 +20,7 @@ typedef struct{
 
 sprite player;
 s_pumpkin pumpkin;
+sprite candy;
 
 int main() {
     load_background(background);
@@ -31,9 +33,6 @@ int main() {
     pumpkin.width = 30;
     pumpkin.height = 27;
     calculate_coords(&pumpkin);
-    consoleLogWord(pumpkin.mem);
-    
-    waitFrames(10);
     draw_sprite(&pumpkin);
     
     
@@ -43,8 +42,15 @@ int main() {
     player.width = 32;
     player.height = 37;
     calculate_coords(&player);
-    waitFrames(10);
     draw_sprite(&player);
+    
+    candy.resource  = &candy_0_0;
+    candy.x=50;
+    candy.y=35;
+    candy.width=16;
+    candy.height=15;
+    calculate_coords(&candy);
+    draw_sprite(&candy);
     
     while(1) {
         waitFrames(2);
