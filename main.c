@@ -8,6 +8,7 @@
 
 void updatePlayer(void);
 void updatePumpkin(void);
+void updateCandy(void);
 int main(void);
 
 typedef struct{
@@ -18,9 +19,18 @@ typedef struct{
     unsigned char direction;
 } s_pumpkin;
 
+typedef struct{
+    unsigned char x, y;
+    unsigned short mem;
+    unsigned char width, height;
+    void* resource;
+    unsigned char vx;
+    unsigned char vy;
+} s_candy;
+
 sprite player;
 s_pumpkin pumpkin;
-sprite candy;
+s_candy candy;
 
 int main() {
     load_background(background);
@@ -47,6 +57,8 @@ int main() {
     candy.resource  = &candy_0_0;
     candy.x=50;
     candy.y=35;
+    candy.vx=0;
+    candy.vy=1;
     candy.width=16;
     candy.height=15;
     calculate_coords(&candy);
@@ -54,10 +66,12 @@ int main() {
     
     while(1) {
         waitFrames(2);
+        updateCandy();
         updatePumpkin();
         updatePlayer();
-    }
-    
+        refresh_sprite(&player);
+        refresh_sprite(&candy);
+    }    
         
     return 0;
 }
@@ -76,6 +90,18 @@ void updatePumpkin() {
     }
     else {
         move_sprite_left(&pumpkin);
+    }
+}
+
+void updateCandy() {
+    if(candy.vx==1) {
+        move_sprite_right(&candy);
+    }
+    if(candy.vx==-1) {
+        move_sprite_left(&candy);
+    }
+    if(candy.vy==1) {
+        move_sprite_down(&candy);
     }
 }
 
