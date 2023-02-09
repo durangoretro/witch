@@ -114,7 +114,6 @@ void updateCandy() {
     }
     if(candy.vy==1) {
         move_sprite_down(&candy);
-        consoleLogDecimal(candy.y);
     }
     if(candy.y==113) {
         candy.x=pumpkin.x+10;
@@ -133,7 +132,6 @@ void updateSkull() {
     }
     if(skull.vy==1) {
         move_sprite_down(&skull);
-        consoleLogDecimal(skull.y);
     }
     if(skull.y==113) {
         skull.x=pumpkin.x+10;
