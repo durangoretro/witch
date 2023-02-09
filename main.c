@@ -5,10 +5,12 @@
 #include "bin/sprites.h"
 #include "bin/witch_sprite.h"
 #include "bin/candy.h"
+#include "bin/skull.h"
 
 void updatePlayer(void);
 void updatePumpkin(void);
 void updateCandy(void);
+void updateSkull(void);
 int main(void);
 
 typedef struct{
@@ -31,6 +33,7 @@ typedef struct{
 sprite player;
 s_pumpkin pumpkin;
 s_candy candy;
+s_candy skull;
 
 int main() {
     load_background(background);
@@ -64,13 +67,22 @@ int main() {
     calculate_coords(&candy);
     draw_sprite(&candy);
     
+    skull.resource  = &skull_0_0;
+    skull.x=70;
+    skull.y=45;
+    skull.vx=0;
+    skull.vy=1;
+    skull.width=20;
+    skull.height=20;
+    calculate_coords(&skull);
+    draw_sprite(&skull);
+    
     while(1) {
         waitFrames(2);
         updateCandy();
+        updateSkull();
         updatePumpkin();
         updatePlayer();
-        refresh_sprite(&player);
-        refresh_sprite(&candy);
     }    
         
     return 0;
@@ -102,6 +114,32 @@ void updateCandy() {
     }
     if(candy.vy==1) {
         move_sprite_down(&candy);
+        consoleLogDecimal(candy.y);
+    }
+    if(candy.y==113) {
+        candy.x=pumpkin.x+10;
+        candy.y=35;
+        calculate_coords(&candy);
+        draw_sprite(&candy);
+    }
+}
+
+void updateSkull() {
+    if(skull.vx==1) {
+        move_sprite_right(&skull);
+    }
+    if(skull.vx==-1) {
+        move_sprite_left(&skull);
+    }
+    if(skull.vy==1) {
+        move_sprite_down(&skull);
+        consoleLogDecimal(skull.y);
+    }
+    if(skull.y==113) {
+        skull.x=pumpkin.x+10;
+        skull.y=35;
+        calculate_coords(&skull);
+        draw_sprite(&skull);
     }
 }
 
@@ -133,5 +171,8 @@ void updatePlayer() {
         player.resource = &witch_sprite_0_0;
         move_sprite_up(&player);
         move_sprite_up(&player);
+    }
+    else {
+        draw_sprite(&player);
     }
 }
