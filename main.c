@@ -182,5 +182,5 @@ void updatePlayer() {
 }
 
 void updateScore() {
-	printBCD(80, 120, font, WHITE, BLACK, score);
+	printBCD(80, 120, font, ORANGE, BLACK, score);
 }
