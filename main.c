@@ -30,12 +30,13 @@ typedef struct{
 void updatePlayer(void);
 void updatePumpkin(void);
 void updateCandy(s_candy*);
+void initCandy(s_candy*);
 int main(void);
 
 // global vars
 sprite player;
 s_pumpkin pumpkin;
-s_candy candy;
+s_candy candy, candy2;
 
 // Implementation
 
@@ -61,15 +62,11 @@ int main() {
     calculate_coords(&player);
     draw_sprite(&player);
     
-    candy.resource  = &candy_0_0;
     candy.x=50;
     candy.y=35;
     candy.vx=0;
     candy.vy=1;
-    candy.width=16;
-    candy.height=15;
-    calculate_coords(&candy);
-    draw_sprite(&candy);
+    initCandy(&candy);
     
     while(1) {
         waitFrames(2);
