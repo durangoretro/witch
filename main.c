@@ -119,16 +119,16 @@ void initCandy(s_candy *mycandy) {
 }
 
 void updateCandy(s_candy *mycandy) {
-    if(candy.vx==1) {
+    if(mycandy->vx==1) {
         move_sprite_right(mycandy);
     }
-    if(candy.vx==-1) {
+    if(mycandy->vx==-1) {
         move_sprite_left(mycandy);
     }
-    if(candy.vy==1) {
+    if(mycandy->vy==1) {
         move_sprite_down(mycandy);
     }
-    if(candy.y==113) {
+    if(mycandy->y==113) {
         initCandy(mycandy);
     }
 }
