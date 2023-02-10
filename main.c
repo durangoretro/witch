@@ -106,6 +106,7 @@ void updatePumpkin() {
 }
 
 void initCandy(s_candy *mycandy) {
+    clean_sprite(mycandy);
     mycandy->good = random() & 0x01;
     
     if(mycandy->good==0) {
@@ -135,7 +136,7 @@ void updateCandy(s_candy *mycandy) {
     if(mycandy->vy==1) {
         move_sprite_down(mycandy);
     }
-    if(mycandy->y==113) {
+    if(mycandy->y==128) {
         initCandy(mycandy);
     }
 }
