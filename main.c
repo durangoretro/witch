@@ -62,15 +62,25 @@ int main() {
     calculate_coords(&player);
     draw_sprite(&player);
     
-    candy.x=50;
-    candy.y=35;
     candy.vx=0;
     candy.vy=1;
     initCandy(&candy);
     
+    candy2.vx=0;
+    candy2.vy=1;
+    candy2.resource  = &candy_0_0;
+    candy2.width=16;
+    candy2.height=15;
+    candy2.x=pumpkin.x+10;
+    candy2.y=55;
+    calculate_coords(&candy2);
+    draw_sprite(&candy2);
+    
+    
     while(1) {
         waitFrames(2);
         updateCandy(&candy);
+        updateCandy(&candy2);
         updatePumpkin();
         updatePlayer();
     }    
