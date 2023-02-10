@@ -6,6 +6,8 @@
 #include "bin/witch_sprite.h"
 #include "bin/candy.h"
 #include "bin/skull.h"
+#include <glyph.h>
+#include "bin/font.h"
 
 // typedefs
 typedef struct{
@@ -31,12 +33,14 @@ void updatePlayer(void);
 void updatePumpkin(void);
 void updateCandy(s_candy*);
 void initCandy(s_candy*);
+void updateScore(void);
 int main(void);
 
 // global vars
 sprite player;
 s_pumpkin pumpkin;
 s_candy candy, candy2;
+long score;
 
 // Implementation
 
@@ -83,6 +87,7 @@ int main() {
         updateCandy(&candy2);
         updatePumpkin();
         updatePlayer();
+        updateScore();
     }    
         
     return 0;
@@ -174,4 +179,8 @@ void updatePlayer() {
     else {
         draw_sprite(&player);
     }
+}
+
+void updateScore() {
+	printBCD(80, 120, font, WHITE, BLACK, score);
 }
