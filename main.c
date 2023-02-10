@@ -7,12 +7,7 @@
 #include "bin/candy.h"
 #include "bin/skull.h"
 
-void updatePlayer(void);
-void updatePumpkin(void);
-void updateCandy(void);
-void updateSkull(void);
-int main(void);
-
+// typedefs
 typedef struct{
     unsigned char x, y;
     unsigned short mem;
@@ -28,12 +23,21 @@ typedef struct{
     void* resource;
     unsigned char vx;
     unsigned char vy;
+    unsigned char good;
 } s_candy;
 
+// method declarations
+void updatePlayer(void);
+void updatePumpkin(void);
+void updateCandy(s_candy*);
+int main(void);
+
+// global vars
 sprite player;
 s_pumpkin pumpkin;
 s_candy candy;
-s_candy skull;
+
+// Implementation
 
 int main() {
     load_background(background);
@@ -67,20 +71,9 @@ int main() {
     calculate_coords(&candy);
     draw_sprite(&candy);
     
-    skull.resource  = &skull_0_0;
-    skull.x=70;
-    skull.y=45;
-    skull.vx=0;
-    skull.vy=1;
-    skull.width=20;
-    skull.height=20;
-    calculate_coords(&skull);
-    draw_sprite(&skull);
-    
     while(1) {
         waitFrames(2);
-        updateCandy();
-        updateSkull();
+        updateCandy(&candy);
         updatePumpkin();
         updatePlayer();
     }    
@@ -105,39 +98,38 @@ void updatePumpkin() {
     }
 }
 
-void updateCandy() {
-    if(candy.vx==1) {
-        move_sprite_right(&candy);
+void initCandy(s_candy *mycandy) {
+    mycandy->good = random() & 0x01;
+    
+    if(mycandy->good==0) {
+        mycandy->resource  = &skull_0_0;
+        mycandy->width=20;
+        mycandy->height=20;
     }
-    if(candy.vx==-1) {
-        move_sprite_left(&candy);
+    else {
+        mycandy->resource  = &candy_0_0;
+        mycandy->width=16;
+        mycandy->height=15;
     }
-    if(candy.vy==1) {
-        move_sprite_down(&candy);
-    }
-    if(candy.y==113) {
-        candy.x=pumpkin.x+10;
-        candy.y=35;
-        calculate_coords(&candy);
-        draw_sprite(&candy);
-    }
+    
+    mycandy->x=pumpkin.x+10;
+    mycandy->y=35;
+    calculate_coords(mycandy);
+    draw_sprite(mycandy);
 }
 
-void updateSkull() {
-    if(skull.vx==1) {
-        move_sprite_right(&skull);
+void updateCandy(s_candy *mycandy) {
+    if(candy.vx==1) {
+        move_sprite_right(mycandy);
     }
-    if(skull.vx==-1) {
-        move_sprite_left(&skull);
+    if(candy.vx==-1) {
+        move_sprite_left(mycandy);
     }
-    if(skull.vy==1) {
-        move_sprite_down(&skull);
+    if(candy.vy==1) {
+        move_sprite_down(mycandy);
     }
-    if(skull.y==113) {
-        skull.x=pumpkin.x+10;
-        skull.y=35;
-        calculate_coords(&skull);
-        draw_sprite(&skull);
+    if(candy.y==113) {
+        initCandy(mycandy);
     }
 }
 
