@@ -7,7 +7,7 @@
 #include "bin/candy.h"
 #include "bin/skull.h"
 #include <glyph.h>
-#include "bin/font.h"
+#include <font.h>
 
 // typedefs
 typedef struct{
