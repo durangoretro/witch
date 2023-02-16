@@ -156,6 +156,10 @@ void checkCols(s_candy* mycandy) {
 
 void updateCandy(s_candy *mycandy) {
     if(mycandy->active==0) {
+        mycandy->y++;
+        if(mycandy->y==108) {
+            initCandy(mycandy);
+        }
         return;
     }
     if(mycandy->vx==1) {
