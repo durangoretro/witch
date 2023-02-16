@@ -8,6 +8,7 @@
 #include "bin/skull.h"
 #include <glyph.h>
 #include <font.h>
+#include <qgraph.h>
 
 // typedefs
 typedef struct{
@@ -41,6 +42,7 @@ sprite player;
 s_pumpkin pumpkin;
 s_candy candy, candy2;
 long score;
+rectangle rect;
 
 // Implementation
 
@@ -79,6 +81,13 @@ int main() {
     candy2.y=55;
     calculate_coords(&candy2);
     draw_sprite(&candy2);
+    
+    rect.x=78;
+    rect.y=118;
+    rect.width=50;
+    rect.height=10;
+    rect.color=BLACK;
+    drawRect(&rect);
     
     
     while(1) {
@@ -143,6 +152,7 @@ void updateCandy(s_candy *mycandy) {
     }
     if(mycandy->y==108) {
         stamp_sprite(mycandy);
+        drawRect(&rect);
         initCandy(mycandy);
     }
 }
@@ -182,5 +192,5 @@ void updatePlayer() {
 }
 
 void updateScore() {
-	printBCD(80, 120, font, ORANGE, BLACK, score);
+    printBCD(80, 119, font, ORANGE, BLACK, score);
 }
