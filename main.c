@@ -27,6 +27,7 @@ typedef struct{
     unsigned char vx;
     unsigned char vy;
     unsigned char good;
+    unsigned char active;
 } s_candy;
 
 // method declarations
@@ -35,6 +36,7 @@ void updatePumpkin(void);
 void updateCandy(s_candy*);
 void initCandy(s_candy*);
 void updateScore(void);
+void checkCols(s_candy*);
 int main(void);
 
 // global vars
@@ -96,6 +98,8 @@ int main() {
         updateCandy(&candy2);
         updatePumpkin();
         updatePlayer();
+        checkCols(&candy);
+        checkCols(&candy2);
         updateScore();
     }    
         
@@ -122,6 +126,7 @@ void updatePumpkin() {
 void initCandy(s_candy *mycandy) {
     //clean_sprite(mycandy);
     mycandy->good = random() & 0x01;
+    mycandy->active=1;
     
     if(mycandy->good==0) {
         mycandy->resource  = &skull_0_0;
@@ -140,7 +145,19 @@ void initCandy(s_candy *mycandy) {
     draw_sprite(mycandy);
 }
 
+void checkCols(s_candy* mycandy) {
+    if(mycandy->good && mycandy->active) {
+        if(player.y < mycandy->y) {
+            mycandy->active=0;
+            clean_sprite(mycandy);
+        }
+    }
+}
+
 void updateCandy(s_candy *mycandy) {
+    if(mycandy->active==0) {
+        return;
+    }
     if(mycandy->vx==1) {
         move_sprite_right(mycandy);
     }
