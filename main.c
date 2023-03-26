@@ -190,7 +190,7 @@ void updatePlayer() {
         move_sprite_left(&player);
         move_sprite_left(&player);
     }
-    // MOve right
+    // Move right
     else if(gamepad & BUTTON_RIGHT && player.x+player.width<128) {
         player.resource = &witch_sprite_0_0;
         move_sprite_right(&player);
