@@ -64,7 +64,7 @@ int main() {
     
     
     player.resource = &witch_sprite_0_0;
-    player.x=0;
+    player.x=50;
     player.y=70;
     player.width = 32;
     player.height = 37;
@@ -75,6 +75,7 @@ int main() {
     candy.vy=1;
     initCandy(&candy);
     
+    candy2.active=1;
     candy2.vx=0;
     candy2.vy=1;
     candy2.resource  = &candy_0_0;
