@@ -44,6 +44,7 @@ sprite player;
 s_pumpkin pumpkin;
 s_candy candy, candy2;
 long score;
+long candy_points=1;
 rectangle rect;
 
 // Implementation
@@ -147,9 +148,17 @@ void initCandy(s_candy *mycandy) {
 
 void checkCols(s_candy* mycandy) {
     if(mycandy->good && mycandy->active) {
-        if(player.y < mycandy->y) {
+        if(check_collisions(mycandy, &player)) {
             mycandy->active=0;
             clean_sprite(mycandy);
+            addBCD(&score, &candy_points);
+        }
+    }
+    else if(!mycandy->good && mycandy->active) {
+        if(check_collisions(mycandy, &player)) {
+            mycandy->active=0;
+            clean_sprite(mycandy);
+            subBCD(&score, &candy_points);
         }
     }
 }
