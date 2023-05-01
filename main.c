@@ -1,14 +1,15 @@
 #include <sprites.h>
 #include <system.h>
+#include <glyph.h>
+#include <font.h>
+#include <qgraph.h>
 #include <psv.h>
 #include "bin/background.h"
 #include "bin/sprites.h"
 #include "bin/witch_sprite.h"
 #include "bin/candy.h"
 #include "bin/skull.h"
-#include <glyph.h>
-#include <font.h>
-#include <qgraph.h>
+#include "bin/title.h"
 
 // typedefs
 typedef struct{
@@ -47,6 +48,7 @@ void updateBullet(void);
 void initCandy(s_candy*);
 void updateScore(void);
 void checkCols(s_candy*);
+void displayTitle(void);
 int main(void);
 
 // global vars
@@ -58,12 +60,15 @@ char player_vx;
 long score;
 long candy_points=1;
 rectangle rect;
+char build_hash[17];
 
 const unsigned char bullet_sprite[1] = {RED};
 
 // Implementation
 
 int main() {
+    displayTitle();
+    
     load_background(background);
     clrscr();
     
@@ -286,6 +291,13 @@ void updateBullet() {
             bullet.active=0;
         }
     }
+}
+
+void displayTitle() {
+    render_image(title);
+    getBuildVersion(build_hash);
+    printStr(16, 110, font, LIME, BLACK, build_hash);
+    waitStart();
 }
 
 void updateScore() {
