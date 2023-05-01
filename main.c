@@ -30,10 +30,20 @@ typedef struct{
     unsigned char active;
 } s_candy;
 
+typedef struct{
+    unsigned char x, y;
+    unsigned short mem;
+    unsigned char width, height;
+    void* resource;
+    unsigned char vx;
+    unsigned char active;
+} s_bullet;
+
 // method declarations
 void updatePlayer(void);
 void updatePumpkin(void);
 void updateCandy(s_candy*);
+void updateBullet(void);
 void initCandy(s_candy*);
 void updateScore(void);
 void checkCols(s_candy*);
@@ -43,9 +53,13 @@ int main(void);
 sprite player;
 s_pumpkin pumpkin;
 s_candy candy, candy2;
+s_bullet bullet;
+char player_vx;
 long score;
 long candy_points=1;
 rectangle rect;
+
+const unsigned char bullet_sprite[1] = {RED};
 
 // Implementation
 
@@ -68,6 +82,7 @@ int main() {
     player.y=70;
     player.width = 32;
     player.height = 37;
+    player_vx = 1;
     calculate_coords(&player);
     draw_sprite(&player);
     
@@ -86,6 +101,14 @@ int main() {
     calculate_coords(&candy2);
     draw_sprite(&candy2);
     
+    bullet.active=0;
+    bullet.x=0;
+    bullet.y=0;
+    bullet.vx=1;
+    bullet.width = 2;
+    bullet.height = 1;
+    bullet.resource = &bullet_sprite;
+    
     rect.x=78;
     rect.y=118;
     rect.width=50;
@@ -100,6 +123,7 @@ int main() {
         updateCandy(&candy2);
         updatePumpkin();
         updatePlayer();
+        updateBullet();
         checkCols(&candy);
         checkCols(&candy2);
         updateScore();
@@ -199,6 +223,7 @@ void updatePlayer() {
         move_sprite_left(&player);
         move_sprite_left(&player);
         move_sprite_left(&player);
+        player_vx=-1;
     }
     // Move right
     else if(gamepad & BUTTON_RIGHT && player.x+player.width<128) {
@@ -206,6 +231,7 @@ void updatePlayer() {
         move_sprite_right(&player);
         move_sprite_right(&player);
         move_sprite_right(&player);
+        player_vx=1;
     }
     else if(gamepad & BUTTON_DOWN && player.y+player.height<128) {
         player.resource = &witch_sprite_0_0;
@@ -217,8 +243,38 @@ void updatePlayer() {
         move_sprite_up(&player);
         move_sprite_up(&player);
     }
+    
+    else if(gamepad & BUTTON_A) {
+        if(bullet.active==0) {
+            bullet.active=1;
+            bullet.y=player.y+23;
+            bullet.vx=player_vx;
+            if(player_vx==1) {
+                bullet.x=player.x+player.width;
+            }
+            else {
+                bullet.x=player.x;
+            }
+            
+            draw_sprite(&bullet);
+        }
+    }
     else {
         draw_sprite(&player);
+    }
+}
+
+void updateBullet() {
+    if(bullet.active) {
+        if(bullet.vx==1) {
+           move_sprite_right(&bullet); 
+        }
+        else {
+            move_sprite_left(&bullet);
+        }
+        if(bullet.x==130 || bullet.x==0xfe) {
+            bullet.active=0;
+        }
     }
 }
 
