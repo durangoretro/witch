@@ -180,6 +180,16 @@ void checkCols(s_candy* mycandy) {
         }
     }
     else if(!mycandy->good && mycandy->active) {
+        if(check_collisions(mycandy, &bullet)) {
+            bullet.active=0;
+            clean_sprite(&bullet);      
+            clean_sprite(mycandy);
+            mycandy->good=1;
+            mycandy->resource  = &candy_0_0;
+            mycandy->width=16;
+            mycandy->height=15;
+            draw_sprite(mycandy);
+        }
         if(check_collisions(mycandy, &player)) {
             mycandy->active=0;
             clean_sprite(mycandy);
@@ -218,7 +228,7 @@ void updatePlayer() {
     // Read gamepad
     gamepad=readGamepad(0);
     // Move left
-    if(gamepad & BUTTON_LEFT && player.x>0) {
+    if(gamepad & BUTTON_LEFT && player.x!=2) {
         player.resource = &witch_sprite_0_1;
         move_sprite_left(&player);
         move_sprite_left(&player);
@@ -226,7 +236,7 @@ void updatePlayer() {
         player_vx=-1;
     }
     // Move right
-    else if(gamepad & BUTTON_RIGHT && player.x+player.width<128) {
+    else if(gamepad & BUTTON_RIGHT && player.x!=98) {
         player.resource = &witch_sprite_0_0;
         move_sprite_right(&player);
         move_sprite_right(&player);
