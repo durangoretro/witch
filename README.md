@@ -16,3 +16,9 @@ To compile this game you will need:
 * [Rescomp](https://github.com/durangoretro/rescomp)
 
 and follow the instructions on MakeFile.
+
+Also, you can use the [Durango Dev Kit Docker Image](https://hub.docker.com/r/zerasul/durangodevkit); using next instructions:
+
+```bash
+docker run --rm -v $PWD:/src/durango zerasul/durangodevkit:latest
+``` 
