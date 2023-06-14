@@ -202,6 +202,9 @@ void checkCols(s_candy* mycandy) {
             mycandy->active=0;
             clean_sprite(mycandy);
             subBCD(&score, &candy_points);
+            setInvert(1);
+            waitFrames(2);
+            setInvert(0);
         }
     }
 }
