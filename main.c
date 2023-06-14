@@ -64,7 +64,7 @@ rectangle rect;
 char build_hash[17];
 
 const unsigned char bullet_sprite[1] = {RED};
-const unsigned char clinc[4] = {LA5, CORCHEA, 0xff,0xff};
+const unsigned char clinc[4] = {LA5, FUSA, 0xff,0xff};
 
 // Implementation
 
@@ -236,7 +236,7 @@ void updatePlayer() {
     // Read gamepad
     gamepad=readGamepad(0);
     // Move left
-    if(gamepad & BUTTON_LEFT && player.x!=2) {
+    if((gamepad & BUTTON_LEFT || readKeyboard(ROW_KEY_O) & KEY_O) && player.x!=2) {
         player.resource = &witch_sprite_0_1;
         move_sprite_left(&player);
         move_sprite_left(&player);
@@ -244,19 +244,19 @@ void updatePlayer() {
         player_vx=-1;
     }
     // Move right
-    else if(gamepad & BUTTON_RIGHT && player.x!=98) {
+    else if((gamepad & BUTTON_RIGHT || readKeyboard(ROW_KEY_P) & KEY_P) && player.x!=98) {
         player.resource = &witch_sprite_0_0;
         move_sprite_right(&player);
         move_sprite_right(&player);
         move_sprite_right(&player);
         player_vx=1;
     }
-    else if(gamepad & BUTTON_DOWN && player.y+player.height<128) {
+    else if((gamepad & BUTTON_DOWN || readKeyboard(ROW_KEY_A) & KEY_A) && player.y+player.height<128) {
         player.resource = &witch_sprite_0_0;
         move_sprite_down(&player);
         move_sprite_down(&player);
     }
-    else if(gamepad & BUTTON_UP && player.y>35) {
+    else if((gamepad & BUTTON_UP || readKeyboard(ROW_KEY_Q) & KEY_Q) && player.y>35) {
         player.resource = &witch_sprite_0_0;
         move_sprite_up(&player);
         move_sprite_up(&player);
