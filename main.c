@@ -256,7 +256,7 @@ void updateGoodCandy(s_candy *mycandy) {
     }
 }
 void updateBadCandy(s_candy *mycandy) {
-    if(mycandy->y>100) {
+    if(mycandy->y>90) {
         mycandy->vy=0xff;
     }
     if(mycandy->y<40) {
