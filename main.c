@@ -177,6 +177,7 @@ void initCandy(s_candy *mycandy) {
     
     mycandy->x=pumpkin.x+10;
     mycandy->y=35;
+    mycandy->vy=1;
     calculate_coords(mycandy);
     draw_sprite(mycandy);
 }
@@ -209,6 +210,10 @@ void checkCols(s_candy* mycandy) {
             setInvert(1);
             waitFrames(2);
             setInvert(0);
+            waitFrames(2);
+            setInvert(1);
+            waitFrames(2);
+            setInvert(0);
         }
     }
 }
@@ -230,42 +235,33 @@ void updateGoodCandy(s_candy *mycandy) {
         }
         return;
     }
-    if(mycandy->vx==1) {
-        move_sprite_right(mycandy);
-    }
-    if(mycandy->vx==-1) {
-        move_sprite_left(mycandy);
-    }
     if(mycandy->vy==1) {
         move_sprite_down(mycandy);
+    }
+    if(mycandy->vy==0xff) {
+        move_sprite_up(mycandy);
     }
     if(mycandy->y==108) {
         stamp_sprite(mycandy);
         drawRect(&rect);
         initCandy(mycandy);
+    }
+    if(mycandy->y<40) {
+        mycandy->vy=1;;
     }
 }
 void updateBadCandy(s_candy *mycandy) {
-    if(mycandy->active==0) {
-        mycandy->y++;
-        if(mycandy->y==108) {
-            initCandy(mycandy);
-        }
-        return;
+    if(mycandy->y>100) {
+        mycandy->vy=0xff;
     }
-    if(mycandy->vx==1) {
-        move_sprite_right(mycandy);
-    }
-    if(mycandy->vx==-1) {
-        move_sprite_left(mycandy);
+    if(mycandy->y<40) {
+        mycandy->vy=1;;
     }
     if(mycandy->vy==1) {
         move_sprite_down(mycandy);
     }
-    if(mycandy->y==108) {
-        stamp_sprite(mycandy);
-        drawRect(&rect);
-        initCandy(mycandy);
+    if(mycandy->vy==0xff) {
+        move_sprite_up(mycandy);
     }
 }
 
