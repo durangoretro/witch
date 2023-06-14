@@ -50,6 +50,8 @@ void initCandy(s_candy*);
 void updateScore(void);
 void checkCols(s_candy*);
 void displayTitle(void);
+void updateGoodCandy(s_candy *mycandy);
+void updateBadCandy(s_candy *mycandy);
 int main(void);
 
 // global vars
@@ -201,6 +203,7 @@ void checkCols(s_candy* mycandy) {
         }
         if(check_collisions(mycandy, &player)) {
             mycandy->active=0;
+            mycandy->good=1;
             clean_sprite(mycandy);
             subBCD(&score, &candy_points);
             setInvert(1);
@@ -211,6 +214,38 @@ void checkCols(s_candy* mycandy) {
 }
 
 void updateCandy(s_candy *mycandy) {
+    if(mycandy->good) {
+        updateGoodCandy(mycandy);
+    }
+    else {
+        updateBadCandy(mycandy);
+    }
+}
+
+void updateGoodCandy(s_candy *mycandy) {
+    if(mycandy->active==0) {
+        mycandy->y++;
+        if(mycandy->y==108) {
+            initCandy(mycandy);
+        }
+        return;
+    }
+    if(mycandy->vx==1) {
+        move_sprite_right(mycandy);
+    }
+    if(mycandy->vx==-1) {
+        move_sprite_left(mycandy);
+    }
+    if(mycandy->vy==1) {
+        move_sprite_down(mycandy);
+    }
+    if(mycandy->y==108) {
+        stamp_sprite(mycandy);
+        drawRect(&rect);
+        initCandy(mycandy);
+    }
+}
+void updateBadCandy(s_candy *mycandy) {
     if(mycandy->active==0) {
         mycandy->y++;
         if(mycandy->y==108) {
