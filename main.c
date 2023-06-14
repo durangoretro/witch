@@ -64,7 +64,7 @@ rectangle rect;
 char build_hash[17];
 
 const unsigned char bullet_sprite[1] = {RED};
-const unsigned char clinc[4] = {LA5, FUSA, 0xff,0xff};
+const unsigned char clinc[4] = {LA6, SEMIFUSA, 0xff,0xff};
 
 // Implementation
 
@@ -262,7 +262,7 @@ void updatePlayer() {
         move_sprite_up(&player);
     }
     
-    else if(gamepad & BUTTON_A) {
+    else if(gamepad & BUTTON_A || readKeyboard(ROW_KEY_I) & KEY_I) {
         if(bullet.active==0) {
             bullet.active=1;
             bullet.y=player.y+23;
