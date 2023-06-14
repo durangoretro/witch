@@ -179,6 +179,11 @@ void initCandy(s_candy *mycandy) {
     mycandy->y=35;
     mycandy->vy=1;
     calculate_coords(mycandy);
+    
+    while(check_collisions(&candy, &candy2)) {
+        move_sprite_down(&candy2);
+    }
+    
     draw_sprite(mycandy);
 }
 
