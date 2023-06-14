@@ -98,6 +98,7 @@ int main() {
     initCandy(&candy);
     
     candy2.active=1;
+    candy2.good=1;
     candy2.vx=0;
     candy2.vy=1;
     candy2.resource  = &candy_0_0;
