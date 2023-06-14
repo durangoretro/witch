@@ -35,7 +35,7 @@ $(BUILD_DIR)/main.o: $(BUILD_DIR)/main.casm $(BUILD_DIR)
 	ca65 -t none $(BUILD_DIR)/main.casm -o $(BUILD_DIR)/main.o
 
 $(BUILD_DIR)/witch.bin: $(BUILD_DIR) $(BUILD_DIR)/main.o
-	ld65 -m $(BUILD_DIR)/witch.txt -C $(CFG) $(BUILD_DIR)/main.o $(DCLIB)/glyph.lib $(DCLIB)/qgraph.lib $(DCLIB)/sprites.lib $(DCLIB)/durango.lib $(DCLIB)/system.lib $(DCLIB)/psv.lib -o $(BUILD_DIR)/witch.bin	
+	ld65 -m $(BUILD_DIR)/witch.txt -C $(CFG) $(BUILD_DIR)/main.o $(DCLIB)/glyph.lib $(DCLIB)/qgraph.lib $(DCLIB)/sprites.lib $(DCLIB)/music.lib $(DCLIB)/system.lib $(DCLIB)/durango.lib $(DCLIB)/psv.lib -o $(BUILD_DIR)/witch.bin	
 
 witch.dux: $(BUILD_DIR)/witch.bin $(BUILD_DIR)
 	java -jar ${RESCOMP} -m SIGNER -n $$(git log -1 | head -1 | sed 's/commit //' | cut -c1-8) -t WITCH -d "Catch all candys. Avoid skulls" -i $(BUILD_DIR)/witch.bin -o witch.dux
