@@ -3,6 +3,7 @@
 #include <glyph.h>
 #include <font.h>
 #include <qgraph.h>
+#include <music.h>
 #include <psv.h>
 #include "bin/background.h"
 #include "bin/sprites.h"
@@ -63,6 +64,7 @@ rectangle rect;
 char build_hash[17];
 
 const unsigned char bullet_sprite[1] = {RED};
+const unsigned char clinc[4] = {LA5, CORCHEA, 0xff,0xff};
 
 // Implementation
 
@@ -182,6 +184,7 @@ void checkCols(s_candy* mycandy) {
             mycandy->active=0;
             clean_sprite(mycandy);
             addBCD(&score, &candy_points);
+            playMelody(clinc);
         }
     }
     else if(!mycandy->good && mycandy->active) {
