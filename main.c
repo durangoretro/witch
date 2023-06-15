@@ -53,6 +53,7 @@ void checkCols(s_candy*);
 void displayTitle(void);
 void updateGoodCandy(s_candy *mycandy);
 void updateBadCandy(s_candy *mycandy);
+void updateLives(void);
 int main(void);
 
 // global vars
@@ -80,6 +81,7 @@ int main() {
     clrscr();
     
     lives=3;
+    updateLives();
     
     pumpkin.direction=0;
     pumpkin.resource = &sprites_0_0;
@@ -222,6 +224,7 @@ void checkCols(s_candy* mycandy) {
             setInvert(0);
             
             lives = lives-1;
+            updateLives();
             if(lives==0xff) {
                 while(1);
             }
@@ -350,9 +353,24 @@ void displayTitle() {
 }
 
 void updateScore() {
-    char i,x;
-    
     printBCD(80, 119, font, ORANGE, BLACK, score);
+}
+
+void updateLives() {
+    char i,x;
+
+    heart.x=0;
+    heart.y=120;
+    heart.width=30;
+    heart.height=8;
+    clean_sprite(&heart);
+    
+    if(lives==0) {
+        return;
+    }  
+    if(lives==0xff) {
+        return;
+    }    
     
     x=0;
     i=0;
