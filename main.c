@@ -12,6 +12,7 @@
 #include "bin/skull.h"
 #include "bin/heart.h"
 #include "bin/title.h"
+#include "bin/hall.h"
 
 // typedefs
 typedef struct{
@@ -42,6 +43,16 @@ typedef struct{
     unsigned char active;
 } s_bullet;
 
+typedef struct{
+    char initials[8];
+    long score;    
+} score_row;
+
+#define HALL_SIZE 7
+typedef struct{
+    score_row scores[HALL_SIZE];
+} storage;
+
 // method declarations
 void updatePlayer(void);
 void updatePumpkin(void);
@@ -55,6 +66,7 @@ void updateGoodCandy(s_candy *mycandy);
 void updateBadCandy(s_candy *mycandy);
 void updateLives(void);
 void initGame(void);
+void displayHall(void);
 int main(void);
 
 // global vars
@@ -69,6 +81,7 @@ long candy_points=1;
 rectangle rect;
 char build_hash[17];
 char lives;
+storage saved_data;
 
 const unsigned char bullet_sprite[1] = {RED};
 const unsigned char clinc[4] = {LA6, SEMIFUSA, 0xff,0xff};
@@ -233,6 +246,7 @@ void checkCols(s_candy* mycandy) {
                 printStr(20, 60, font, WHITE, BLACK, "GAME OVER");
                 printStr(20, 70, font, WHITE, BLACK, "PRESS ENTER...");
                 waitStart();
+                displayHall();
                 initGame();
             }
         }
@@ -391,4 +405,46 @@ void updateLives() {
         x=x+10;
         i++;
     } while(i<lives);
+}
+
+void displayHall() {
+    char i, y;
+    char name[8];
+    
+    if(score>saved_data.scores[6].score){
+        render_image(hall);
+        readStr(16, 58, font, WHITE, BLACK, name, 8);
+        
+        // Find new score position
+        i=HALL_SIZE-1;
+        do {
+            if(score>saved_data.scores[i].score) {
+                y=i;
+                i--;
+            }
+        } while(i!=0xFF);
+        
+        // Copy y->y+1 ... HALL_SIZE-2->HALL_SIZE-1
+                
+        i=HALL_SIZE-1;
+        while (i!=y) {
+            copyMem(&(saved_data.scores[i]), &(saved_data.scores[i-1]), 12);
+            i--;            
+        };
+        
+        saved_data.scores[y].score=score;
+        copyMem(saved_data.scores[y].initials, name, 8);        
+    }
+    
+    render_image(hall);
+    i=0;
+    y=52;
+    do{
+        printStr(10, y, font, WHITE, BLACK, saved_data.scores[i].initials);
+        printBCD(70, y, font, WHITE, BLACK, saved_data.scores[i].score);
+        y+=10;
+        i++;
+    } while(i!=HALL_SIZE);
+    
+    waitStart();
 }
