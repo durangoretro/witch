@@ -208,11 +208,11 @@ void checkCols(s_candy* mycandy) {
             mycandy->height=15;
             draw_sprite(mycandy);
         }
+        // DEATH
         if(check_collisions(mycandy, &player)) {
             mycandy->active=0;
             mycandy->good=1;
-            clean_sprite(mycandy);
-            subBCD(&score, &candy_points);
+            clean_sprite(mycandy);            
             setInvert(1);
             waitFrames(2);
             setInvert(0);
@@ -220,6 +220,11 @@ void checkCols(s_candy* mycandy) {
             setInvert(1);
             waitFrames(2);
             setInvert(0);
+            
+            lives = lives-1;
+            if(lives==0xff) {
+                while(1);
+            }
         }
     }
 }
