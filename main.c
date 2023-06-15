@@ -112,7 +112,7 @@ void initGame() {
     clrscr();
     
     score=0;
-    lives=0;
+    lives=3;
     updateLives();
     
     pumpkin.direction=0;
@@ -368,8 +368,7 @@ void updateBullet() {
 
 void displayTitle() {
     render_image(title);
-    getBuildVersion(build_hash);
-    printStr(16, 110, font, LIME, BLACK, build_hash);
+    printStr(16, 110, font, LIME, BLACK, "KEYS: O P Q A I");
     waitStart();
 }
 
