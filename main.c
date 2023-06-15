@@ -10,6 +10,7 @@
 #include "bin/witch_sprite.h"
 #include "bin/candy.h"
 #include "bin/skull.h"
+#include "bin/heart.h"
 #include "bin/title.h"
 
 // typedefs
@@ -56,6 +57,7 @@ int main(void);
 
 // global vars
 sprite player;
+sprite heart;
 s_pumpkin pumpkin;
 s_candy candy, candy2;
 s_bullet bullet;
@@ -82,7 +84,6 @@ int main() {
     pumpkin.y=5;
     pumpkin.width = 30;
     pumpkin.height = 27;
-    calculate_coords(&pumpkin);
     draw_sprite(&pumpkin);
     
     
@@ -92,7 +93,6 @@ int main() {
     player.width = 32;
     player.height = 37;
     player_vx = 1;
-    calculate_coords(&player);
     draw_sprite(&player);
     
     candy.vx=0;
@@ -108,7 +108,6 @@ int main() {
     candy2.height=15;
     candy2.x=pumpkin.x+10;
     candy2.y=55;
-    calculate_coords(&candy2);
     draw_sprite(&candy2);
     
     bullet.active=0;
@@ -149,7 +148,7 @@ void updatePumpkin() {
     }
     if(pumpkin.x==96) {
         pumpkin.direction=1;
-        pumpkin.resource = &sprites_0_2;
+        pumpkin.resource = &sprites_0_1;
     }
     if(pumpkin.direction==0) {
         move_sprite_right(&pumpkin);
@@ -178,7 +177,6 @@ void initCandy(s_candy *mycandy) {
     mycandy->x=pumpkin.x+10;
     mycandy->y=35;
     mycandy->vy=1;
-    calculate_coords(mycandy);
     
     while(check_collisions(&candy, &candy2)) {
         move_sprite_down(&candy2);
@@ -345,4 +343,11 @@ void displayTitle() {
 
 void updateScore() {
     printBCD(80, 119, font, ORANGE, BLACK, score);
+    
+    heart.resource = &heart_0_0;
+    heart.x=0;
+    heart.y=120;
+    heart.width = 10;
+    heart.height = 8;
+    draw_sprite(&heart);
 }

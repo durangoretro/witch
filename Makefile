@@ -27,8 +27,11 @@ $(BUILD_DIR)/candy.h: candy.png $(BUILD_DIR)
 	
 $(BUILD_DIR)/skull.h: skull.png $(BUILD_DIR)
 	java -jar ${RESCOMP} -n skull -m SPRITESHEET -i skull.png -h 20 -w 20 -o $(BUILD_DIR)/skull.h
+	
+$(BUILD_DIR)/heart.h: heart.png $(BUILD_DIR)
+	java -jar ${RESCOMP} -n heart -m SPRITESHEET -i heart.png -h 8 -w 10 -o $(BUILD_DIR)/heart.h
 
-$(BUILD_DIR)/main.casm: $(SOURCE_DIR)/main.c $(BUILD_DIR) $(BUILD_DIR)/background.h $(BUILD_DIR)/sprites.h $(BUILD_DIR)/witch_sprite.h $(BUILD_DIR)/candy.h $(BUILD_DIR)/skull.h $(BUILD_DIR)/title.h
+$(BUILD_DIR)/main.casm: $(SOURCE_DIR)/main.c $(BUILD_DIR) $(BUILD_DIR)/background.h $(BUILD_DIR)/sprites.h $(BUILD_DIR)/witch_sprite.h $(BUILD_DIR)/candy.h $(BUILD_DIR)/skull.h $(BUILD_DIR)/heart.h $(BUILD_DIR)/title.h
 	cc65 -I $(DCINC) $(SOURCE_DIR)/main.c -t none --cpu 6502 -o $(BUILD_DIR)/main.casm
 
 $(BUILD_DIR)/main.o: $(BUILD_DIR)/main.casm $(BUILD_DIR)
