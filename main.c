@@ -112,7 +112,7 @@ void initGame() {
     clrscr();
     
     score=0;
-    lives=3;
+    lives=0;
     updateLives();
     
     pumpkin.direction=0;
@@ -413,6 +413,7 @@ void displayHall() {
     
     if(score>saved_data.scores[6].score){
         render_image(hall);
+        printStr(4, 38, font, WHITE, BLACK, "ENTER YOUR NAME:");
         readStr(16, 58, font, WHITE, BLACK, name, 8);
         
         // Find new score position
@@ -437,6 +438,7 @@ void displayHall() {
     }
     
     render_image(hall);
+    printStr(25, 35, font, GREEN, BLACK, "HALL OF FAME");
     i=0;
     y=52;
     do{
