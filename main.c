@@ -226,6 +226,8 @@ void checkCols(s_candy* mycandy) {
             lives = lives-1;
             updateLives();
             if(lives==0xff) {
+                printStr(20, 60, font, WHITE, BLACK, "GAME OVER");
+                printStr(20, 70, font, WHITE, BLACK, "PRESS ENTER...");
                 while(1);
             }
         }
