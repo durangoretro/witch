@@ -66,6 +66,7 @@ long score;
 long candy_points=1;
 rectangle rect;
 char build_hash[17];
+char lives;
 
 const unsigned char bullet_sprite[1] = {RED};
 const unsigned char clinc[4] = {LA6, SEMIFUSA, 0xff,0xff};
@@ -77,6 +78,8 @@ int main() {
     
     load_background(background);
     clrscr();
+    
+    lives=3;
     
     pumpkin.direction=0;
     pumpkin.resource = &sprites_0_0;
@@ -342,12 +345,20 @@ void displayTitle() {
 }
 
 void updateScore() {
+    char i,x;
+    
     printBCD(80, 119, font, ORANGE, BLACK, score);
     
-    heart.resource = &heart_0_0;
-    heart.x=0;
-    heart.y=120;
-    heart.width = 10;
-    heart.height = 8;
-    draw_sprite(&heart);
+    x=0;
+    i=0;
+    do {
+        heart.resource = &heart_0_0;
+        heart.x=x;
+        heart.y=120;
+        heart.width = 10;
+        heart.height = 8;
+        draw_sprite(&heart);
+        x=x+10;
+        i++;
+    } while(i<lives);
 }
