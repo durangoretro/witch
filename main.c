@@ -54,6 +54,7 @@ void displayTitle(void);
 void updateGoodCandy(s_candy *mycandy);
 void updateBadCandy(s_candy *mycandy);
 void updateLives(void);
+void initGame(void);
 int main(void);
 
 // global vars
@@ -76,10 +77,28 @@ const unsigned char clinc[4] = {LA6, SEMIFUSA, 0xff,0xff};
 
 int main() {
     displayTitle();
+    initGame();
     
+    while(1) {
+        waitFrames(2);
+        updateCandy(&candy);
+        updateCandy(&candy2);
+        updatePumpkin();
+        updatePlayer();
+        updateBullet();
+        checkCols(&candy);
+        checkCols(&candy2);
+        updateScore();
+    }    
+        
+    return 0;
+}
+
+void initGame() {    
     load_background(background);
     clrscr();
     
+    score=0;
     lives=3;
     updateLives();
     
@@ -129,21 +148,6 @@ int main() {
     rect.height=10;
     rect.color=BLACK;
     drawRect(&rect);
-    
-    
-    while(1) {
-        waitFrames(2);
-        updateCandy(&candy);
-        updateCandy(&candy2);
-        updatePumpkin();
-        updatePlayer();
-        updateBullet();
-        checkCols(&candy);
-        checkCols(&candy2);
-        updateScore();
-    }    
-        
-    return 0;
 }
 
 void updatePumpkin() {
@@ -228,7 +232,8 @@ void checkCols(s_candy* mycandy) {
             if(lives==0xff) {
                 printStr(20, 60, font, WHITE, BLACK, "GAME OVER");
                 printStr(20, 70, font, WHITE, BLACK, "PRESS ENTER...");
-                while(1);
+                waitStart();
+                initGame();
             }
         }
     }
